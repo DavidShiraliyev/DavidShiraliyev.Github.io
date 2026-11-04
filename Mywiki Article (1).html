@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Shiraliyev - Mywiki</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wikiBg: '#101214',
+                        wikiCardBg: '#1a1d20',
+                        wikiHeaderBg: '#202122',
+                        wikiBorder: '#3c4043',
+                        wikiText: '#eaecf0',
+                        wikiMuted: '#9aa0a6',
+                        wikiLink: '#36c4f0',
+                        wikiLinkHover: '#6aa84f',
+                    },
+                    fontFamily: {
+                        serif: ['Linux Libertine', 'Georgia', 'Times', 'serif'],
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #101214;
+            color: #eaecf0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        /* Custom styling for Wikipedia-style content links */
+        .wiki-content a {
+            color: #36c4f0;
+            text-decoration: none;
+        }
+        .wiki-content a:hover {
+            text-decoration: underline;
+            color: #6aa84f;
+        }
+        .wiki-heading {
+            font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+            border-bottom: 1px solid #3c4043;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-cyan-900 selection:text-white">
+
+    <!-- TOP NAVBAR -->
+    <header class="bg-wikiHeaderBg border-b border-wikiBorder sticky top-0 z-50 px-4 py-2.5 flex items-center justify-between shadow-md">
+        <div class="flex items-center space-x-4">
+            <button id="sidebarToggle" class="text-wikiMuted hover:text-wikiText p-2 rounded-lg hover:bg-wikiCardBg transition-colors" title="Menüyü Aç/Kapat">
+                <i class="fa-solid fa-bars text-lg"></i>
+            </button>
+            <a href="#" class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded bg-gradient-to-tr from-cyan-600 to-emerald-500 flex items-center justify-center font-bold text-xl text-white font-serif">W</div>
+                <span class="font-serif text-2xl font-bold tracking-tight text-wikiText">Mywiki</span>
+                <span class="text-xs text-wikiMuted self-end mb-1">Özgür Ansiklopedi</span>
+            </a>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="flex-1 max-w-xl mx-4 hidden sm:block">
+            <div class="relative">
+                <input type="text" placeholder="Mywiki üzerinde ara..." class="w-full bg-wikiBg border border-wikiBorder text-wikiText text-sm rounded-lg pl-10 pr-4 py-1.5 focus:outline-none focus:border-wikiLink transition-colors placeholder-wikiMuted">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-wikiMuted text-sm"></i>
+            </div>
+        </div>
+
+        <!-- USER ACTIONS -->
+        <div class="flex items-center space-x-3 text-sm">
+            <a href="#" class="text-wikiLink hover:underline hidden md:inline"><i class="fa-solid fa-globe mr-1"></i> Türkçe</a>
+            <a href="#" class="text-wikiMuted hover:text-wikiText"><i class="fa-regular fa-user mr-1"></i> Oturum aç</a>
+        </div>
+    </header>
+
+    <div class="flex-1 flex max-w-7xl w-full mx-auto px-2 sm:px-6 py-6 gap-6">
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="w-64 flex-shrink-0 hidden md:block space-y-6 text-sm border-r border-wikiBorder pr-4">
+            <div>
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-wikiMuted mb-3">Gezinti</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-house w-5 text-wikiMuted"></i> Ana Sayfa</a></li>
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-newspaper w-5 text-wikiMuted"></i> Hakkımızda</a></li>
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-shuffle w-5 text-wikiMuted"></i> Rastgele Madde</a></li>
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-fire w-5 text-wikiMuted"></i> Gündemdeki Konular</a></li>
+                </ul>
+            </div>
+
+            <div class="border-t border-wikiBorder pt-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-wikiMuted mb-3">Katkı Yapın</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-pen-to-square w-5 text-wikiMuted"></i> Madde Düzenle</a></li>
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-circle-question w-5 text-wikiMuted"></i> Yardım</a></li>
+                    <li><a href="#" class="text-wikiLink hover:underline block py-1"><i class="fa-solid fa-hand-holding-heart w-5 text-wikiMuted"></i> Bağış Yapın</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN ARTICLE CONTENT -->
+        <main class="flex-1 min-w-0 wiki-content">
+
+            <!-- ARTICLE TITLE & ACTIONS -->
+            <div class="border-b border-wikiBorder pb-3 mb-6 flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-normal text-wikiText">David Shiraliyev</h1>
+                    <p class="text-sm text-wikiMuted mt-1">Mywiki, özgür ansiklopedi sayfasından</p>
+                </div>
+                <div class="flex items-center space-x-2 text-xs">
+                    <span class="bg-wikiCardBg border border-wikiBorder px-3 py-1.5 rounded text-wikiText font-medium"><i class="fa-solid fa-eye text-emerald-400 mr-1.5"></i> Madde</span>
+                    <a href="#" class="text-wikiMuted hover:bg-wikiCardBg px-3 py-1.5 rounded transition-colors"><i class="fa-solid fa-comments mr-1.5"></i> Tartışma</a>
+                    <a href="#" class="text-wikiMuted hover:bg-wikiCardBg px-3 py-1.5 rounded transition-colors"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Geçmiş</a>
+                </div>
+            </div>
+
+            <!-- LAYOUT GRID FOR INFOBOX + TEXT -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- INFOBOX (Mobile: Top, Desktop: Right Column) -->
+                <div class="lg:col-span-5 lg:order-2">
+                    <div class="bg-wikiCardBg border border-wikiBorder rounded-lg overflow-hidden p-4 shadow-lg text-sm">
+                        <!-- Infobox Title -->
+                        <div class="text-center font-bold text-lg border-b border-wikiBorder pb-2 text-wikiText font-serif bg-wikiHeaderBg -mx-4 -mt-4 p-3 mb-3">
+                            David Shiraliyev
+                        </div>
+
+                        <!-- Driver Image -->
+                        <div class="mb-4 text-center">
+                            <div class="bg-wikiBg border border-wikiBorder rounded overflow-hidden max-w-xs mx-auto">
+                                <img src="1000512784.jpg" alt="David Shiraliyev" class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='driver.jpg';">
+                            </div>
+                            <p class="text-xs text-wikiMuted mt-2 italic">David Shiraliyev (2026)</p>
+                        </div>
+
+                        <!-- Biographical Table Data -->
+                        <table class="w-full text-left border-collapse">
+                            <tbody>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <th class="py-2 pr-2 font-semibold text-wikiMuted w-1/3">Doğum</th>
+                                    <td class="py-2 text-wikiText">26 Ocak 2010 (16 yaşında)<br><span class="text-wikiMuted text-xs">Bakü, Azerbaycan</span></td>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <th class="py-2 pr-2 font-semibold text-wikiMuted">Meslek</th>
+                                    <td class="py-2 text-wikiText">Profesyonel Yarış Pilotu</td>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <th class="py-2 pr-2 font-semibold text-wikiMuted">FIA Derecesi</th>
+                                    <td class="py-2 text-wikiText"><span class="bg-slate-700 text-slate-200 text-xs px-2 py-0.5 rounded font-mono border border-slate-500">Silver (Gümüş)</span></td>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <th class="py-2 pr-2 font-semibold text-wikiMuted">Mevcut Takım</th>
+                                    <td class="py-2 text-wikiText"><a href="#kariyer">Grasser Racing Team (GRT)</a></td>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <th class="py-2 pr-2 font-semibold text-wikiMuted">Yarış Aracı</th>
+                                    <td class="py-2 text-wikiText">Lamborghini Huracán GT3 EVO2</td>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <th class="py-2 pr-2 font-semibold text-wikiMuted">Aktif Yıllar</th>
+                                    <td class="py-2 text-wikiText">2023 - Günümüz</td>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50 bg-wikiHeaderBg/40">
+                                    <th colspan="2" class="py-1.5 px-1 font-bold text-center text-xs text-wikiText uppercase tracking-wider">Önemli Başarılar</th>
+                                </tr>
+                                <tr class="border-t border-wikiBorder/50">
+                                    <td colspan="2" class="py-2 text-xs text-wikiText space-y-1">
+                                        <div class="flex items-start"><i class="fa-solid fa-trophy text-amber-400 mr-2 mt-0.5"></i> Türkiye Karting Şampiyonu (Senior, 2023)</div>
+                                        <div class="flex items-start"><i class="fa-solid fa-star text-cyan-400 mr-2 mt-0.5"></i> TOSFED Yıldızını Arıyor Finalisti (2024)</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- MAIN TEXT CONTENT (Desktop: Left Column) -->
+                <div class="lg:col-span-7 lg:order-1 space-y-6 text-base leading-relaxed">
+
+                    <!-- INTRO -->
+                    <p class="text-wikiText">
+                        <strong>David Shiraliyev</strong> (d. 26 Ocak 2010, Bakü), Azerbaycanlı profesyonel motor sporları yarış pilotudur. Günümüzde GT3 klasmanında Avusturya merkezli köklü ekip <a href="#grt">Grasser Racing Team (GRT)</a> bünyesinde Lamborghini Huracán GT3 EVO2 direksiyonunda mücadele etmektedir. FIA tarafından "Silver" (Gümüş) pilot derecesine sahiptir.
+                    </p>
+
+                    <!-- TABLE OF CONTENTS (İçindekiler) -->
+                    <div class="bg-wikiCardBg border border-wikiBorder rounded-lg p-4 max-w-md my-4">
+                        <div class="flex items-center justify-between border-b border-wikiBorder pb-2 mb-3">
+                            <span class="font-bold text-sm text-wikiText"><i class="fa-solid fa-list-ol mr-2 text-wikiMuted"></i>İçindekiler</span>
+                            <button onclick="toggleToc()" class="text-xs text-wikiLink hover:underline" id="tocBtn">[gizle]</button>
+                        </div>
+                        <ul class="space-y-1.5 text-sm text-wikiLink" id="tocList">
+                            <li><a href="#erken-yasam" class="hover:underline">1. Erken Yaşamı ve Ailesi</a></li>
+                            <li>
+                                <a href="#kariyer" class="hover:underline">2. Motor Sporları Kariyeri</a>
+                                <ul class="pl-4 pt-1 space-y-1 text-xs text-wikiMuted">
+                                    <li><a href="#karting" class="hover:underline text-wikiLink">2.1 Karting ve İlk Yıllar (2023)</a></li>
+                                    <li><a href="#tosfed" class="hover:underline text-wikiLink">2.2 TOSFED Yıldızını Arıyor (2024)</a></li>
+                                    <li><a href="#f4" class="hover:underline text-wikiLink">2.3 Formula 4 Regional (2025)</a></li>
+                                    <li><a href="#gt3" class="hover:underline text-wikiLink">2.4 GT3 & Grasser Racing Team (2026)</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#kariyer-ozeti" class="hover:underline">3. Kariyer Özeti</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- ERKEN YAŞAM -->
+                    <section id="erken-yasam" class="pt-2">
+                        <h2 class="wiki-heading text-2xl font-serif text-wikiText pb-1 mb-3">
+                            <span>Erken Yaşamı ve Ailesi</span>
+                        </h2>
+                        <p>
+                            David Shiraliyev, 26 Ocak 2010 tarihinde Azerbaycan'ın başkenti Bakü'de ailenin ilk evladı olarak dünyaya geldi. 
+                        </p>
+                        <p class="mt-3">
+                            Anneleri, iş dünyasında aktif rol alan ve Fetiyev Group şirketinde İcra Direktörü görevini sürdüren <strong>Sevinc Tahirova</strong>'dır. Dedesi ise Bakü Metrosu'nun inşasındaki ve faaliyetlerindeki üstün hizmetlerinden dolayı Azerbaycan Cumhuriyeti Cumhurbaşkanı tarafından <em>'Tərəqqi' (Terakki / İlerleme) Madalyası</em> ile ödüllendirilen saygın mühendis ve bürokrat <strong>Xaleddin Tahirov</strong>'dur.
+                        </p>
+                    </section>
+
+                    <!-- KARİYER -->
+                    <section id="kariyer" class="pt-2">
+                        <h2 class="wiki-heading text-2xl font-serif text-wikiText pb-1 mb-3">
+                            <span>Motor Sporları Kariyeri</span>
+                        </h2>
+
+                        <!-- KARTİNG -->
+                        <div id="karting" class="mb-4">
+                            <h3 class="text-lg font-bold text-wikiText mb-2 border-b border-wikiBorder/40 pb-1">Karting ve İlk Yıllar (2023)</h3>
+                            <p>
+                                Profesyonel motor sporları kariyerine 2023 yılında Türkiye’nin en rekabetçi liglerinden biri olan <strong>Türkiye Karting Şampiyonası Senior</strong> kategorisinde adım attı. Henüz ilk sezonunda rakiplerine karşı kurduğu üstünlükle sezonu şampiyon olarak tamamladı ve yeteneğini ulusal düzeyde kanıtladı.
+                            </p>
+                        </div>
+
+                        <!-- TOSFED -->
+                        <div id="tosfed" class="mb-4">
+                            <h3 class="text-lg font-bold text-wikiText mb-2 border-b border-wikiBorder/40 pb-1">TOSFED Yıldızını Arıyor (2024)</h3>
+                            <p>
+                                2024 yılında, motor sporlarına yeni yetenekler kazandırmayı amaçlayan prestijli <strong>"TOSFED Yıldızını Arıyor"</strong> projesine katıldı. Yaklaşık 1.200 aday arasından yüksek sürüş tekniği, pürüzsüz çizgi disiplini ve fiziksel dayanıklılığıyla sıyrılarak en seçkin 50 finalistten biri olmayı başardı.
+                            </p>
+                        </div>
+
+                        <!-- F4 -->
+                        <div id="f4" class="mb-4">
+                            <h3 class="text-lg font-bold text-wikiText mb-2 border-b border-wikiBorder/40 pb-1">Formula 4 Regional (2025)</h3>
+                            <p>
+                                Kariyerini uluslararası arenaya taşıyarak 2025 yılında <strong>İspanya Formula 4 Regional</strong> liginde piste çıktı. Avrupa'nın en zorlu ve teknik pistlerinde sergilediği tutarlı performans ve yüksek hızlı viraj sürüş tarzıyla otomobil sporları otoriterlerinin dikkatini üzerine çekti.
+                            </p>
+                        </div>
+
+                        <!-- GT3 -->
+                        <div id="gt3" class="mb-4">
+                            <h3 class="text-lg font-bold text-wikiText mb-2 border-b border-wikiBorder/40 pb-1">GT3 & Grasser Racing Team (2026)</h3>
+                            <p>
+                                İspanya'daki başarısının ardından, GT ve DTM dünyasının köklü ekiplerinden olan ve Avusturya merkezli çalışan <strong>Grasser Racing Team (GRT)</strong> tarafından özel teste davet edildi. 
+                            </p>
+                            <p class="mt-3">
+                                2026 yılında dayanıklılık yarışlarının zirve noktalarından biri olan GT3 klasmanına geçiş yapan ve FIA tarafından "Silver" (Gümüş) pilot derecesine terfi ettirilen genç yetenek, Grasser Racing Team bünyesinde V10 motorlu <strong>Lamborghini Huracán GT3 EVO2</strong> koltuğuna oturdu. Pro-Am ve Am kategorilerinden tecrübeli pilotların yer aldığı resmi GT3 antrenman seanslarında üst düzey dereceler sergiledi.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- KARİYER ÖZETİ TABLOSU -->
+                    <section id="kariyer-ozeti" class="pt-2">
+                        <h2 class="wiki-heading text-2xl font-serif text-wikiText pb-1 mb-3">Kariyer Özeti</h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm border border-wikiBorder bg-wikiCardBg text-left">
+                                <thead class="bg-wikiHeaderBg text-wikiText font-semibold border-b border-wikiBorder">
+                                    <tr>
+                                        <th class="p-2 border-r border-wikiBorder">Sezon</th>
+                                        <th class="p-2 border-r border-wikiBorder">Seri / Şampiyona</th>
+                                        <th class="p-2 border-r border-wikiBorder">Takım</th>
+                                        <th class="p-2">Sonuç / Derece</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-wikiBorder text-wikiMuted">
+                                    <tr class="hover:bg-wikiHeaderBg/50 transition-colors">
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText font-mono">2023</td>
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText">Türkiye Karting Şampiyonası (Senior)</td>
+                                        <td class="p-2 border-r border-wikiBorder">-</td>
+                                        <td class="p-2 text-emerald-400 font-semibold"><i class="fa-solid fa-trophy mr-1 text-amber-400"></i>Şampiyon</td>
+                                    </tr>
+                                    <tr class="hover:bg-wikiHeaderBg/50 transition-colors">
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText font-mono">2024</td>
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText">TOSFED Yıldızını Arıyor</td>
+                                        <td class="p-2 border-r border-wikiBorder">-</td>
+                                        <td class="p-2 text-cyan-400">Top 50 Finalist</td>
+                                    </tr>
+                                    <tr class="hover:bg-wikiHeaderBg/50 transition-colors">
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText font-mono">2025</td>
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText">İspanya Formula 4 Regional</td>
+                                        <td class="p-2 border-r border-wikiBorder">Özel Katılım</td>
+                                        <td class="p-2 text-wikiText">Seri Derecesi</td>
+                                    </tr>
+                                    <tr class="hover:bg-wikiHeaderBg/50 transition-colors">
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText font-mono">2026</td>
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText">GT3 Endurance / Antrenmanlar</td>
+                                        <td class="p-2 border-r border-wikiBorder text-wikiText">Grasser Racing Team (GRT)</td>
+                                        <td class="p-2 text-amber-300">FIA Silver Driver</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-wikiHeaderBg border-t border-wikiBorder text-xs text-wikiMuted py-8 px-4 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <p>Bu sayfa son olarak 4 Kasım 2026 tarihinde güncellenmiştir.</p>
+                <p class="mt-1">Metin <a href="#" class="text-wikiLink hover:underline">Creative Commons Atıf-BenzerPaylaşım Lisansı</a> altındadır.</p>
+            </div>
+            <div class="flex items-center space-x-6 text-base">
+                <a href="#" class="hover:text-wikiText transition-colors" title="Gizlilik Politikası"><i class="fa-solid fa-user-shield"></i></a>
+                <a href="#" class="hover:text-wikiText transition-colors" title="Mywiki Hakkında"><i class="fa-solid fa-circle-info"></i></a>
+                <a href="#" class="hover:text-wikiText transition-colors" title="Sorumluluk Reddi"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                <a href="#" class="hover:text-wikiText transition-colors" title="Mobil Görünüm"><i class="fa-solid fa-mobile-screen"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        // Sidebar Toggle Logic
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+        });
+
+        // Table of Contents Toggle Logic
+        function toggleToc() {
+            const list = document.getElementById('tocList');
+            const btn = document.getElementById('tocBtn');
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                btn.textContent = '[gizle]';
+            } else {
+                list.classList.add('hidden');
+                btn.textContent = '[göster]';
+            }
+        }
+    </script>
+</body>
+</html>
